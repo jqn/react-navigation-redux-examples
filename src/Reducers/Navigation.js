@@ -38,10 +38,8 @@ export const navigationReducer = {
           state
         );
       case types.NAVIGATE_BACK:
-        console.log('action', action);
         return AppNavigator.router.getStateForAction(
           NavigationActions.back(),
-          // navigateAction(action),
           state,
           _dispatch
         );
