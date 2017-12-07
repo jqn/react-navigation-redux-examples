@@ -42,13 +42,12 @@ export const navigationReducer = {
           state
         );
       case types.NAVIGATE_ROOT: {
-        const arg = action;
         const resetState = {
           index: 0,
           actions: [
             NavigationActions.navigate({
-              routeName: arg.route,
-              params: { title: arg.title }
+              routeName: action.route,
+              params: action.params
             })
           ]
         };
