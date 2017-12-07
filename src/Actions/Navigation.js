@@ -1,26 +1,23 @@
 import * as types from './Types';
 
-export function navigateBack(_dispatch) {
-  console.log('_dispatch', _dispatch);
+export function navigateBack() {
   return {
-    type: types.NAVIGATE_BACK,
-    _dispatch
+    type: types.NAVIGATE_BACK
   };
 }
 
-export function navigateHome(route, id, title) {
+export function navigateRoot(screen, params) {
   return {
-    type: types.NAVIGATE_HOME,
-    route,
-    id,
-    title
+    type: types.NAVIGATE_ROOT,
+    route: screen,
+    params
   };
 }
 
 export function navigate(screen, params) {
   return {
     type: 'Navigation/NAVIGATE',
-    routeName: screen,
+    route: screen,
     params
   };
 }

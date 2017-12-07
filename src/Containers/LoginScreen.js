@@ -28,8 +28,9 @@ const LoginScreen = ({ navigation }) => (
         title="SIGN IN"
         onPress={() => {
           navigation.dispatch({
-            type: 'NAVIGATE_HOME',
-            route: 'Home'
+            type: 'Navigation/NAVIGATE',
+            screen: 'Main',
+            params: { loggedIn: true }
           });
         }}
       />

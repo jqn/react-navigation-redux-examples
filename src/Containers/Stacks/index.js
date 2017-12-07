@@ -9,7 +9,7 @@ export function getStack() {
       screen: LoginScreen,
       path: '/'
     },
-    Home: {
+    Main: {
       screen: MainScreen,
       path: '/index'
     }

@@ -25,25 +25,23 @@ const initialNavState = {
 };
 
 function navigateAction({ routeName, params }) {
-  return NavigationActions.navigate({ routeName, params: { params } });
+  return NavigationActions.navigate({ routeName, params });
 }
 
 export const navigationReducer = {
   nav: (state = initialNavState, action) => {
-    let _dispatch = null;
     switch (action.type) {
       case 'Navigation/NAVIGATE':
         return AppNavigator.router.getStateForAction(
-          navigateAction(action),
+          navigateAction({ routeName: action.screen, params: action.params }),
           state
         );
       case types.NAVIGATE_BACK:
         return AppNavigator.router.getStateForAction(
           NavigationActions.back(),
-          state,
-          _dispatch
+          state
         );
-      case types.NAVIGATE_HOME: {
+      case types.NAVIGATE_ROOT: {
         const arg = action;
         const resetState = {
           index: 0,
