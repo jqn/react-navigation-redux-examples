@@ -29,7 +29,7 @@ const LoginScreen = ({ navigation }) => (
         onPress={() => {
           navigation.dispatch({
             type: 'Navigation/NAVIGATE',
-            screen: 'Main',
+            routeName: 'Main',
             params: { loggedIn: true }
           });
         }}
@@ -39,7 +39,6 @@ const LoginScreen = ({ navigation }) => (
 );
 
 function mapStateToProps(state) {
-  console.log('state', state);
   return {
     authorized: state.authorized,
     deviceDimensions: state.deviceDimensions

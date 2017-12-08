@@ -31,16 +31,20 @@ const initialNavState = {
   ]
 };
 
-function navigateAction({ routeName, id }) {
-  return NavigationActions.navigate({ routeName, params: { id } });
+function navigateAction({ routeName, params }) {
+  return NavigationActions.navigate({ routeName, params });
 }
 
 export const navigationReducer = {
   nav: (state = initialNavState, action) => {
+    console.log('action', action);
     switch (action.type) {
       case 'Navigation/NAVIGATE':
         return AppNavigator.router.getStateForAction(
-          navigateAction(action),
+          navigateAction({
+            routeName: action.routeName,
+            params: action.params
+          }),
           state
         );
       case types.NAVIGATE_BACK:
@@ -48,10 +52,15 @@ export const navigationReducer = {
           NavigationActions.back(),
           state
         );
-      case types.NAVIGATE_HOME: {
+      case types.NAVIGATE_ROOT: {
         const resetState = {
           index: 0,
-          actions: [NavigationActions.navigate({ routeName: 'Root' })]
+          actions: [
+            NavigationActions.navigate({
+              routeName: 'Root',
+              params: action.params
+            })
+          ]
         };
         return AppNavigator.router.getStateForAction(
           NavigationActions.reset(resetState),
