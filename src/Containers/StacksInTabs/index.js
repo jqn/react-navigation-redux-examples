@@ -6,7 +6,7 @@ import MainScreen from '../MainScreen';
 import SettingsScreen from '../SettingsScreen';
 
 const MainTab = StackNavigator({
-  Login: {
+  Home: {
     screen: LoginScreen,
     path: '/',
     navigationOptions: {
@@ -22,29 +22,18 @@ const MainTab = StackNavigator({
   }
 });
 
-export const AppNavigator = TabNavigator(
-  {
-    Root: {
-      screen: MainTab,
-      path: '/',
-      navigationOptions: {
-        tabBarLabel: 'Home'
-      }
-    },
-    Profile: {
-      screen: SettingsScreen,
-      navigationOptions: {
-        tabBarLabel: 'Profile'
-      }
+export const TabNav = {
+  Root: {
+    screen: MainTab,
+    path: '/',
+    navigationOptions: {
+      tabBarLabel: 'Home'
     }
   },
-  {
-    mode: Platform.OS === 'ios' ? 'modal' : 'card',
-    tabBarOptions: {
-      activeTintColor: '#000'
-    },
-    tabBarPosition: 'bottom',
-    animationEnabled: false,
-    swipeEnabled: false
+  Settings: {
+    screen: SettingsScreen,
+    navigationOptions: {
+      tabBarLabel: 'Settings'
+    }
   }
-);
+};

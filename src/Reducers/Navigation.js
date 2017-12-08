@@ -1,58 +1,19 @@
 import { Platform } from 'react-native';
-import {
-  NavigationActions,
-  StackNavigator,
-  TabNavigator
-} from 'react-navigation';
-
-import LoginScreen from '../Containers/LoginScreen';
-import MainScreen from '../Containers/MainScreen';
-import SettingsScreen from '../Containers/SettingsScreen';
+import { NavigationActions, TabNavigator } from 'react-navigation';
 
 import * as types from '../Actions/Types';
-const MainTab = StackNavigator({
-  Home: {
-    screen: LoginScreen,
-    path: '/',
-    navigationOptions: {
-      title: 'Welcome'
-    }
-  },
-  Main: {
-    screen: MainScreen,
-    path: '/people/:name',
-    navigationOptions: ({ navigation }) => ({
-      title: 'bob'
-    })
-  }
-});
 
-export const AppNavigator = TabNavigator(
-  {
-    Root: {
-      screen: LoginScreen,
-      path: '/',
-      navigationOptions: {
-        tabBarLabel: 'Home'
-      }
-    },
-    Settings: {
-      screen: SettingsScreen,
-      navigationOptions: {
-        tabBarLabel: 'Settings'
-      }
-    }
+import { TabNav } from '../Containers/StacksInTabs';
+
+export const AppNavigator = TabNavigator(TabNav, {
+  mode: Platform.OS === 'ios' ? 'modal' : 'card',
+  tabBarOptions: {
+    activeTintColor: '#000'
   },
-  {
-    mode: Platform.OS === 'ios' ? 'modal' : 'card',
-    tabBarOptions: {
-      activeTintColor: '#000'
-    },
-    tabBarPosition: 'bottom',
-    animationEnabled: false,
-    swipeEnabled: false
-  }
-);
+  tabBarPosition: 'bottom',
+  animationEnabled: false,
+  swipeEnabled: false
+});
 
 const initialNavState = {
   index: 0,
