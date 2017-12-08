@@ -24,7 +24,7 @@ TabBarIcon.propTypes = {
   tintColor: PropTypes.string.isRequired
 };
 
-const MainTab = TabNavigator(
+export const SignedIn = TabNavigator(
   {
     Main: {
       screen: MainScreen,
@@ -65,19 +65,35 @@ const MainTab = TabNavigator(
   }
 );
 
-export const StacksOverTabs = {
-  Root: {
-    screen: MainTab,
-    path: '/',
-    navigationOptions: {
-      tabBarVisible: false,
-      gesturesEnabled: false
-    }
-  },
+export const SignedOut = StackNavigator({
   Login: {
     screen: LoginScreen,
     navigationOptions: {
       gesturesEnabled: false
     }
   }
+});
+
+export const createRootNavigator = (signedIn = false) => {
+  return StackNavigator(
+    {
+      SignedIn: {
+        screen: SignedIn,
+        navigationOptions: {
+          gesturesEnabled: false
+        }
+      },
+      SignedOut: {
+        screen: SignedOut,
+        navigationOptions: {
+          gesturesEnabled: false
+        }
+      }
+    },
+    {
+      headerMode: 'none',
+      mode: 'modal',
+      initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
+    }
+  );
 };

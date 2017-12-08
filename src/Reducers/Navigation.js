@@ -3,9 +3,9 @@ import { NavigationActions, StackNavigator } from 'react-navigation';
 
 import * as types from '../Actions/Types';
 
-import { StacksOverTabs } from '../Containers/StacksOverTabs';
+import { createRootNavigator } from '../Containers/StacksOverTabs';
 
-export const AppNavigator = StackNavigator(StacksOverTabs, {
+export const AppNavigator = StackNavigator(createRootNavigator, {
   mode: Platform.OS === 'ios' ? 'modal' : 'card'
 });
 
@@ -18,6 +18,7 @@ const initialNavState = {
     }
   ]
 };
+// https://github.com/spencercarli/react-navigation-auth-flow/blob/finished-code/app/index.js
 
 function navigateAction({ routeName, params }) {
   return NavigationActions.navigate({ routeName, params });
