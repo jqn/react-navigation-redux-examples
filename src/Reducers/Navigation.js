@@ -1,15 +1,58 @@
 import { Platform } from 'react-native';
-import { NavigationActions, StackNavigator } from 'react-navigation';
+import {
+  NavigationActions,
+  StackNavigator,
+  TabNavigator
+} from 'react-navigation';
 
-import { Stacks } from '../Containers/Stacks';
+import LoginScreen from '../Containers/LoginScreen';
+import MainScreen from '../Containers/MainScreen';
+import SettingsScreen from '../Containers/SettingsScreen';
 
 import * as types from '../Actions/Types';
-
-export const AppNavigator = StackNavigator(Stacks, {
-  initialRouteName: 'Root',
-  headerMode: 'screen',
-  mode: Platform.OS === 'ios' ? 'modal' : 'card'
+const MainTab = StackNavigator({
+  Home: {
+    screen: LoginScreen,
+    path: '/',
+    navigationOptions: {
+      title: 'Welcome'
+    }
+  },
+  Main: {
+    screen: MainScreen,
+    path: '/people/:name',
+    navigationOptions: ({ navigation }) => ({
+      title: 'bob'
+    })
+  }
 });
+
+export const AppNavigator = TabNavigator(
+  {
+    Root: {
+      screen: LoginScreen,
+      path: '/',
+      navigationOptions: {
+        tabBarLabel: 'Home'
+      }
+    },
+    Settings: {
+      screen: SettingsScreen,
+      navigationOptions: {
+        tabBarLabel: 'Settings'
+      }
+    }
+  },
+  {
+    mode: Platform.OS === 'ios' ? 'modal' : 'card',
+    tabBarOptions: {
+      activeTintColor: '#000'
+    },
+    tabBarPosition: 'bottom',
+    animationEnabled: false,
+    swipeEnabled: false
+  }
+);
 
 const initialNavState = {
   index: 0,
@@ -17,15 +60,18 @@ const initialNavState = {
     {
       key: 'Root',
       routeName: 'Root',
-      params: {
-        id: 0
-      }
+      routes: [{ key: 'Home', routeName: 'Home' }],
+      index: 0
+    },
+    {
+      key: 'Profile',
+      routeName: 'Settings'
     }
   ]
 };
 
-function navigateAction({ routeName, params }) {
-  return NavigationActions.navigate({ routeName, params });
+function navigateAction({ routeName, id }) {
+  return NavigationActions.navigate({ routeName, params: { id } });
 }
 
 export const navigationReducer = {
@@ -33,7 +79,7 @@ export const navigationReducer = {
     switch (action.type) {
       case 'Navigation/NAVIGATE':
         return AppNavigator.router.getStateForAction(
-          navigateAction({ routeName: action.screen, params: action.params }),
+          navigateAction(action),
           state
         );
       case types.NAVIGATE_BACK:
@@ -41,15 +87,10 @@ export const navigationReducer = {
           NavigationActions.back(),
           state
         );
-      case types.NAVIGATE_ROOT: {
+      case types.NAVIGATE_HOME: {
         const resetState = {
           index: 0,
-          actions: [
-            NavigationActions.navigate({
-              routeName: action.route,
-              params: action.params
-            })
-          ]
+          actions: [NavigationActions.navigate({ routeName: 'Root' })]
         };
         return AppNavigator.router.getStateForAction(
           NavigationActions.reset(resetState),
