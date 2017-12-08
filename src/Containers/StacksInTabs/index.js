@@ -17,7 +17,7 @@ const MainTab = StackNavigator({
     screen: MainScreen,
     path: '/people/:name',
     navigationOptions: ({ navigation }) => ({
-      title: 'bob'
+      title: 'Main'
     })
   }
 });

@@ -16,8 +16,7 @@ const MainScreen = ({ navigation }) => (
     <Button
       onPress={() =>
         navigation.dispatch({
-          type: 'NAVIGATE_BACK',
-          dispatch: 'goback'
+          type: 'NAVIGATE_BACK'
         })}
       title="Go Back"
       color="#841584"
