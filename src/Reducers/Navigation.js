@@ -1,32 +1,20 @@
 import { Platform } from 'react-native';
-import { NavigationActions, TabNavigator } from 'react-navigation';
+import { NavigationActions, StackNavigator } from 'react-navigation';
 
 import * as types from '../Actions/Types';
 
-import { TabNav } from '../Containers/StacksInTabs';
+import { StacksOverTabs } from '../Containers/StacksOverTabs';
 
-export const AppNavigator = TabNavigator(TabNav, {
-  mode: Platform.OS === 'ios' ? 'modal' : 'card',
-  tabBarOptions: {
-    activeTintColor: '#000'
-  },
-  tabBarPosition: 'bottom',
-  animationEnabled: false,
-  swipeEnabled: false
+export const AppNavigator = StackNavigator(StacksOverTabs, {
+  mode: Platform.OS === 'ios' ? 'modal' : 'card'
 });
 
 const initialNavState = {
   index: 0,
   routes: [
     {
-      key: 'Root',
-      routeName: 'Root',
-      routes: [{ key: 'Home', routeName: 'Home' }],
-      index: 0
-    },
-    {
-      key: 'Profile',
-      routeName: 'Settings'
+      key: 'Login',
+      routeName: 'Login'
     }
   ]
 };
@@ -37,7 +25,6 @@ function navigateAction({ routeName, params }) {
 
 export const navigationReducer = {
   nav: (state = initialNavState, action) => {
-    console.log('action', action);
     switch (action.type) {
       case 'Navigation/NAVIGATE':
         return AppNavigator.router.getStateForAction(
@@ -57,7 +44,7 @@ export const navigationReducer = {
           index: 0,
           actions: [
             NavigationActions.navigate({
-              routeName: 'Root',
+              routeName: 'Login',
               params: action.params
             })
           ]

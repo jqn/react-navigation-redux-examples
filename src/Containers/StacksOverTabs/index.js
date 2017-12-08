@@ -24,51 +24,35 @@ TabBarIcon.propTypes = {
   tintColor: PropTypes.string.isRequired
 };
 
-const MainTab = StackNavigator({
-  Home: {
-    screen: LoginScreen,
-    path: '/',
-    navigationOptions: {
-      title: 'Welcome'
-    }
-  },
+const MainTab = TabNavigator({
   Main: {
     screen: MainScreen,
-    path: '/people/:name',
-    navigationOptions: ({ navigation }) => ({
-      title: 'Main'
-    })
-  }
-});
-
-export const TabNav = {
-  Root: {
-    screen: MainTab,
-    path: '/',
     navigationOptions: {
-      tabBarLabel: 'Home',
-      tabBarIcon: ({ tintColor, focused }) => (
-        <TabBarIcon
-          focused={focused}
-          tintColor={tintColor}
-          focusedName="ios-home"
-          unfocusedName="ios-home-outline"
-        />
-      )
+      tabBarLabel: 'Main'
     }
   },
   Settings: {
     screen: SettingsScreen,
+    path: '/',
     navigationOptions: {
-      tabBarLabel: 'Settings',
-      tabBarIcon: ({ tintColor, focused }) => (
-        <TabBarIcon
-          focused={focused}
-          tintColor={tintColor}
-          focusedName="ios-settings"
-          unfocusedName="ios-settings-outline"
-        />
-      )
+      tabBarLabel: 'Settings'
+    }
+  }
+});
+
+export const StacksOverTabs = {
+  Root: {
+    screen: MainTab,
+    path: '/',
+    navigationOptions: {
+      tabBarVisible: false,
+      gesturesEnabled: false
+    }
+  },
+  Login: {
+    screen: LoginScreen,
+    navigationOptions: {
+      gesturesEnabled: false
     }
   }
 };
