@@ -18,7 +18,6 @@ const initialNavState = {
     }
   ]
 };
-// https://github.com/spencercarli/react-navigation-auth-flow/blob/finished-code/app/index.js
 
 function navigateAction({ routeName, params }) {
   return NavigationActions.navigate({ routeName, params });
