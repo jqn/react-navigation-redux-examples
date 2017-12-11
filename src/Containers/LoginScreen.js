@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
-
-// Redux
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { ActionCreators } from '../Actions';
+import { onSignIn } from '../Auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,27 +23,15 @@ const LoginScreen = ({ navigation }) => (
         backgroundColor="#03A9F4"
         title="SIGN IN"
         onPress={() => {
-          navigation.dispatch({
-            type: 'Navigation/NAVIGATE',
-            screen: 'Main',
-            params: { loggedIn: true }
-          });
+          onSignIn().then(() => navigation.navigate('SignedIn'));
         }}
       />
     </Card>
   </View>
 );
 
-function mapStateToProps(state) {
-  console.log('state', state);
-  return {
-    authorized: state.authorized,
-    deviceDimensions: state.deviceDimensions
-  };
-}
+LoginScreen.navigationOptions = {
+  title: 'Home Screen'
+};
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ActionCreators, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export default LoginScreen;

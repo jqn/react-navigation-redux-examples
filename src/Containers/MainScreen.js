@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import { onSignOut } from '../Auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,11 +15,7 @@ const MainScreen = ({ navigation }) => (
   <View style={styles.container}>
     <Text>MainScreen</Text>
     <Button
-      onPress={() =>
-        navigation.dispatch({
-          type: 'NAVIGATE_BACK',
-          dispatch: 'goback'
-        })}
+      onPress={() => onSignOut().then(() => navigation.navigate('SignedOut'))}
       title="Go Back"
       color="#841584"
       accessibilityLabel="Learn more about this purple button"
