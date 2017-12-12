@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { Provider } from 'react-redux';
 import { connect } from 'react-redux';
@@ -15,10 +15,22 @@ import { addNavigationHelpers } from 'react-navigation';
 
 import { ActionCreators } from './src/Actions';
 import reducer from './src/Reducers';
-// import { AppNavigator } from './src/Reducers/Navigation';
 
-import { AppNavigator } from './src/Reducers/Navigation';
-import { isSignedIn } from './src/Auth';
+import { isSignedIn, onSignIn } from './src/Auth';
+
+import {
+  tempRootNavigator,
+  createRootNavigator
+} from './src/Containers/StacksOverTabs';
+const allowed = false;
+
+export var AppNavigator = tempRootNavigator(false, false);
+
+isSignedIn()
+  .then(res => {
+    allowed = res;
+  })
+  .catch(err => alert('An error occurred'));
 
 // middleware that logs actions
 const loggerMiddleware = createLogger({
@@ -26,13 +38,12 @@ const loggerMiddleware = createLogger({
 });
 
 function configureStore(initialState) {
+  console.log('initialState', initialState);
   const enhancer = compose(applyMiddleware(thunkMiddleware, loggerMiddleware));
   return createStore(reducer, initialState, enhancer);
 }
 
 const store = configureStore({});
-
-// const Layout = AppNavigator(true, true);
 
 const AppWithNavigationState = connect(state => ({
   nav: state.nav
@@ -53,18 +64,29 @@ export default class App extends React.Component {
 
   componentWillMount() {
     isSignedIn()
-      .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
+      .then(res => this.setState({ signedIn: res, checkedSignIn: res }))
       .catch(err => alert('An error occurred'));
   }
 
   render() {
-    // const { checkedSignIn, signedIn, allowed } = this.state;
-    // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
-    // if (!checkedSignIn) {
-    //   return null;
-    // }
-    // const Layout = createRootNavigator(signedIn, allowed);
-    // return <Layout />;
+    if (!this.state.checkedSignIn) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Text
+            onPress={() => {
+              onSignIn().then(() => console.log('signed in'));
+              this.setState({ checkedSignIn: true });
+              AppNavigator = createRootNavigator(true, true);
+            }}
+          >
+            Login
+          </Text>
+        </View>
+      );
+    }
+    console.log('returning component', this.state.checkedSignIn);
     return (
       <Provider store={store}>
         <AppWithNavigationState />

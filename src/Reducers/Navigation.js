@@ -2,64 +2,7 @@ import { Platform } from 'react-native';
 import { NavigationActions, StackNavigator } from 'react-navigation';
 
 import * as types from '../Actions/Types';
-
-import {
-  SignedIn,
-  SignedOut,
-  SignedInInventory
-} from '../Containers/StacksOverTabs';
-
-import LoginScreen from '../Containers/LoginScreen';
-
-export const createRootNavigator = (signedIn = false, allowed = false) => {
-  if (allowed) {
-    return StackNavigator(
-      {
-        SignedIn: {
-          screen: SignedInInventory,
-          navigationOptions: {
-            gesturesEnabled: false
-          }
-        },
-        SignedOut: {
-          screen: SignedOut,
-          navigationOptions: {
-            gesturesEnabled: false
-          }
-        }
-      },
-      {
-        headerMode: 'none',
-        mode: 'modal',
-        initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
-      }
-    );
-  } else {
-    return StackNavigator(
-      {
-        SignedIn: {
-          screen: SignedIn,
-          navigationOptions: {
-            gesturesEnabled: false
-          }
-        },
-        SignedOut: {
-          screen: SignedOut,
-          navigationOptions: {
-            gesturesEnabled: false
-          }
-        }
-      },
-      {
-        headerMode: 'none',
-        mode: 'modal',
-        initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
-      }
-    );
-  }
-};
-
-export const AppNavigator = createRootNavigator(true, false);
+import { AppNavigator } from '../../App';
 
 const initialNavState = {
   index: 0,
