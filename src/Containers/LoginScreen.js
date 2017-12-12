@@ -23,7 +23,10 @@ const LoginScreen = ({ navigation }) => (
         backgroundColor="#03A9F4"
         title="SIGN IN"
         onPress={() => {
-          onSignIn().then(() => navigation.navigate('SignedIn'));
+          navigation.dispatch({
+            type: 'Navigation/NAVIGATE',
+            routeName: 'Main'
+          });
         }}
       />
     </Card>

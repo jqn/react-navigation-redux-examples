@@ -3,18 +3,72 @@ import { NavigationActions, StackNavigator } from 'react-navigation';
 
 import * as types from '../Actions/Types';
 
-import { StacksOverTabs } from '../Containers/StacksOverTabs';
+import {
+  SignedIn,
+  SignedOut,
+  SignedInInventory
+} from '../Containers/StacksOverTabs';
 
-export const AppNavigator = StackNavigator(StacksOverTabs, {
-  mode: Platform.OS === 'ios' ? 'modal' : 'card'
-});
+import LoginScreen from '../Containers/LoginScreen';
+
+export const createRootNavigator = (signedIn = false, allowed = false) => {
+  if (allowed) {
+    return StackNavigator(
+      {
+        SignedIn: {
+          screen: SignedInInventory,
+          navigationOptions: {
+            gesturesEnabled: false
+          }
+        },
+        SignedOut: {
+          screen: SignedOut,
+          navigationOptions: {
+            gesturesEnabled: false
+          }
+        }
+      },
+      {
+        headerMode: 'none',
+        mode: 'modal',
+        initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
+      }
+    );
+  } else {
+    return StackNavigator(
+      {
+        SignedIn: {
+          screen: SignedIn,
+          navigationOptions: {
+            gesturesEnabled: false
+          }
+        },
+        SignedOut: {
+          screen: SignedOut,
+          navigationOptions: {
+            gesturesEnabled: false
+          }
+        }
+      },
+      {
+        headerMode: 'none',
+        mode: 'modal',
+        initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
+      }
+    );
+  }
+};
+
+export const AppNavigator = createRootNavigator(true, false);
 
 const initialNavState = {
   index: 0,
   routes: [
     {
-      key: 'Login',
-      routeName: 'Login'
+      key: 'SignedOut',
+      routeName: 'SignedOut',
+      routes: [{ key: 'LogIn', routeName: 'LogIn' }],
+      index: 0
     }
   ]
 };

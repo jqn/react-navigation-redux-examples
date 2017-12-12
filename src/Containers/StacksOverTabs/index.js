@@ -93,50 +93,50 @@ export const SignedInInventory = TabNavigator(
   }
 );
 
-export const createRootNavigator = (signedIn = false, allowed = false) => {
-  if (allowed) {
-    return StackNavigator(
-      {
-        SignedIn: {
-          screen: SignedInInventory,
-          navigationOptions: {
-            gesturesEnabled: false
-          }
-        },
-        SignedOut: {
-          screen: SignedOut,
-          navigationOptions: {
-            gesturesEnabled: false
-          }
-        }
-      },
-      {
-        headerMode: 'none',
-        mode: 'modal',
-        initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
-      }
-    );
-  } else {
-    return StackNavigator(
-      {
-        SignedIn: {
-          screen: SignedIn,
-          navigationOptions: {
-            gesturesEnabled: false
-          }
-        },
-        SignedOut: {
-          screen: SignedOut,
-          navigationOptions: {
-            gesturesEnabled: false
-          }
-        }
-      },
-      {
-        headerMode: 'none',
-        mode: 'modal',
-        initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
-      }
-    );
-  }
-};
+// export const createRootNavigator = (signedIn = false, allowed = false) => {
+//   if (allowed) {
+//     return StackNavigator(
+//       {
+//         SignedIn: {
+//           screen: SignedInInventory,
+//           navigationOptions: {
+//             gesturesEnabled: false
+//           }
+//         },
+//         SignedOut: {
+//           screen: SignedOut,
+//           navigationOptions: {
+//             gesturesEnabled: false
+//           }
+//         }
+//       },
+//       {
+//         headerMode: 'none',
+//         mode: 'modal',
+//         initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
+//       }
+//     );
+//   } else {
+//     return StackNavigator(
+//       {
+//         SignedIn: {
+//           screen: SignedIn,
+//           navigationOptions: {
+//             gesturesEnabled: false
+//           }
+//         },
+//         SignedOut: {
+//           screen: SignedOut,
+//           navigationOptions: {
+//             gesturesEnabled: false
+//           }
+//         }
+//       },
+//       {
+//         headerMode: 'none',
+//         mode: 'modal',
+//         initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
+//       }
+//     );
+//   }
+// };
