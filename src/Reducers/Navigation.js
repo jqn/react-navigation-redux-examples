@@ -10,8 +10,14 @@ const initialNavState = {
     {
       key: 'SignedOut',
       routeName: 'SignedOut',
-      routes: [{ key: 'LogIn', routeName: 'LogIn' }],
-      index: 0
+      routes: [{ key: 'Main', routeName: 'Main' }],
+      index: 1
+    },
+    {
+      key: 'SignedIn',
+      routeName: 'SignedIn',
+      routes: [{ key: 'Main', routeName: 'Main' }],
+      index: 2
     }
   ]
 };

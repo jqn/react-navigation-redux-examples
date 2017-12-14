@@ -78,7 +78,7 @@ export default class App extends React.Component {
             onPress={() => {
               onSignIn().then(() => console.log('signed in'));
               this.setState({ checkedSignIn: true });
-              AppNavigator = createRootNavigator(true, true);
+              createRootNavigator(true, true);
             }}
           >
             Login

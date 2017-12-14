@@ -9,9 +9,27 @@ import InventoryScreen from '../InventoryScreen';
 import SettingsScreen from '../SettingsScreen';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import PropTypes from 'prop-types';
 
 const headerStyle = {
   marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+};
+
+const TabBarIcon = props => (
+  <Ionicons
+    name={props.focused ? props.focusedName : props.unfocusedName}
+    size={26}
+    style={{ color: props.tintColor }}
+  />
+);
+
+TabBarIcon.propTypes = {
+  focused: PropTypes.bool.isRequired,
+  focusedName: PropTypes.string.isRequired,
+  unfocusedName: PropTypes.string.isRequired,
+  tintColor: PropTypes.string.isRequired
 };
 
 export const SignedOut = StackNavigator({
@@ -95,74 +113,167 @@ export const SignedInInventory = TabNavigator(
 
 export const createRootNavigator = (signedIn = false, allowed = false) => {
   if (allowed) {
-    console.log('is allowed', allowed);
-    return StackNavigator(
+    return TabNavigator(
       {
         SignedIn: {
-          screen: SignedInInventory,
+          screen: MainScreen,
+          path: '/',
           navigationOptions: {
-            gesturesEnabled: false
+            tabBarLabel: 'Main',
+            tabBarIcon: ({ tintColor, focused }) => (
+              <TabBarIcon
+                focused={focused}
+                tintColor={tintColor}
+                focusedName="ios-home"
+                unfocusedName="ios-home-outline"
+              />
+            )
+          }
+        },
+        Settings: {
+          screen: SettingsScreen,
+          navigationOptions: {
+            tabBarLabel: 'Settings',
+            tabBarIcon: ({ tintColor, focused }) => (
+              <TabBarIcon
+                focused={focused}
+                tintColor={tintColor}
+                focusedName="ios-settings"
+                unfocusedName="ios-settings-outline"
+              />
+            )
           }
         },
         SignedOut: {
-          screen: SignedOut,
+          screen: LoginScreen,
           navigationOptions: {
+            tabBarLabel: 'Home',
             gesturesEnabled: false
           }
         }
       },
       {
-        headerMode: 'none',
-        mode: 'modal',
-        initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
+        mode: Platform.OS === 'ios' ? 'modal' : 'card',
+        tabBarOptions: {
+          activeTintColor: '#000'
+        },
+        tabBarPosition: 'bottom',
+        animationEnabled: false,
+        swipeEnabled: false
       }
     );
   } else {
-    console.log('is not allowed', allowed);
-    return StackNavigator(
+    return TabNavigator(
       {
         SignedIn: {
-          screen: SignedIn,
+          screen: MainScreen,
+          path: '/',
           navigationOptions: {
-            gesturesEnabled: false
+            tabBarLabel: 'Main',
+            tabBarIcon: ({ tintColor, focused }) => (
+              <TabBarIcon
+                focused={focused}
+                tintColor={tintColor}
+                focusedName="ios-home"
+                unfocusedName="ios-home-outline"
+              />
+            )
           }
         },
         SignedOut: {
-          screen: SignedOut,
+          screen: LoginScreen,
           navigationOptions: {
+            tabBarLabel: 'Home',
             gesturesEnabled: false
           }
         }
       },
       {
-        headerMode: 'none',
-        mode: 'modal',
-        initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
+        mode: Platform.OS === 'ios' ? 'modal' : 'card',
+        tabBarOptions: {
+          activeTintColor: '#000'
+        },
+        tabBarPosition: 'bottom',
+        animationEnabled: false,
+        swipeEnabled: false
       }
     );
   }
+
+  // if (allowed) {
+  //   console.log('is allowed', allowed);
+  //   return StackNavigator(
+  //     {
+  //       SignedIn: {
+  //         screen: SignedInInventory,
+  //         navigationOptions: {
+  //           gesturesEnabled: false
+  //         }
+  //       },
+  //       SignedOut: {
+  //         screen: SignedOut,
+  //         navigationOptions: {
+  //           gesturesEnabled: false
+  //         }
+  //       }
+  //     },
+  //     {
+  //       headerMode: 'none',
+  //       mode: 'modal',
+  //       initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
+  //     }
+  //   );
+  // } else {
+  //   return StackNavigator(
+  //     {
+  //       SignedIn: {
+  //         screen: SignedIn,
+  //         navigationOptions: {
+  //           gesturesEnabled: false
+  //         }
+  //       },
+  //       SignedOut: {
+  //         screen: SignedOut,
+  //         navigationOptions: {
+  //           gesturesEnabled: false
+  //         }
+  //       }
+  //     },
+  //     {
+  //       headerMode: 'none',
+  //       mode: 'modal',
+  //       initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
+  //     }
+  //   );
+  // }
 };
 
 export const tempRootNavigator = (signedIn = false, allowed = false) => {
-  return StackNavigator(
+  return TabNavigator(
     {
       SignedIn: {
-        screen: SignedInInventory,
+        screen: MainScreen,
+        path: '/',
         navigationOptions: {
-          gesturesEnabled: false
+          tabBarLabel: 'Main'
         }
       },
       SignedOut: {
-        screen: SignedOut,
+        screen: LoginScreen,
         navigationOptions: {
+          tabBarLabel: 'Home',
           gesturesEnabled: false
         }
       }
     },
     {
-      headerMode: 'none',
-      mode: 'modal',
-      initialRouteName: signedIn ? 'SignedIn' : 'SignedOut'
+      mode: Platform.OS === 'ios' ? 'modal' : 'card',
+      tabBarOptions: {
+        activeTintColor: '#000'
+      },
+      tabBarPosition: 'bottom',
+      animationEnabled: false,
+      swipeEnabled: false
     }
   );
 };

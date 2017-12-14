@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
 import { onSignIn, onSignOut } from '../Auth';
-import { createRootNavigator } from './StacksOverTabs';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,6 +31,7 @@ const LoginScreen = ({ navigation }) => (
         onPress={() => {
           onSignIn().then(() => navigation.navigate('SignedIn'));
           // createRootNavigator(true, true);
+          // AppNavigator = createRootNavigator(true, true);
         }}
       />
       <Button
